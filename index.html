@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yazma Eser Paralel Alt-Ajan Tercüme &amp; Tahkik AI Skill</title>
+<style>
+  :root {
+    --bg: #f6f4ec; --card: #ffffff; --ink: #1e252c; --muted: #5b6670;
+    --teal: #163836; --accent: #1d5c55; --gold: #ffdd00; --pink: #ea4aaa; --border: #dfd6c5;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "Segoe UI", system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
+  .hero { background: linear-gradient(135deg, #163836 0%, #264653 100%); color: #fff; padding: 24px 20px; border-bottom: 4px solid var(--gold); }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  .hero-flex { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; }
+  .hero h1 { margin: 0 0 6px; font-size: 1.48rem; }
+  .hero p { margin: 0; opacity: 0.92; font-size: 0.94rem; max-width: 650px; }
+  .btn-group { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .btn-bmc { background: var(--gold); color: #111; font-weight: 700; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 0.92rem; }
+  .btn-sp { background: var(--pink); color: #fff; font-weight: 700; padding: 10px 16px; border-radius: 8px; text-decoration: none; font-size: 0.92rem; }
+  .btn-gh { background: #24292f; color: #fff; font-weight: 600; padding: 10px 14px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; border: 1px solid #57606a; }
+  main.wrap { padding: 18px 16px 36px; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .tab-btn { border: 1px solid var(--border); background: #fdfbf7; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+  .tab-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; }
+  label { display: block; font-weight: 600; font-size: 0.88rem; margin-bottom: 5px; }
+  input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; }
+  textarea { font-family: Consolas, monospace; font-size: 0.86rem; }
+  .action-btn { background: var(--accent); color: #fff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.9rem; }
+  th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+  th { background: #f2ecdf; }
+  pre.cmd { background: #1e293b; color: #f8fafc; padding: 12px 14px; border-radius: 8px; overflow-x: auto; font-size: 0.86rem; }
+  footer { text-align: center; padding: 18px; background: #fdfbf7; border-top: 1px solid var(--border); font-size: 0.92rem; }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap hero-flex">
+    <div>
+      <h1>📖 Yazma Eser Paralel Alt-Ajan Tercüme ve Tahkik AI Skill</h1>
+      <p>100+ sayfalık Arapça, Osmanlıca ve Farsça el yazmalarını 10'lu paralel alt-ajan dalgaları, ortak ıstılah sözlüğü (glossary.md) ve tutarlılık editörü ajanıyla tercüme aracı.</p>
+    </div>
+    <div class="btn-group">
+      <a class="btn-bmc" href="https://buymeacoffee.com/shnfatih8" target="_blank" rel="noopener">☕ Bir Kahve Ismarla (Buy Me a Coffee)</a>
+      <a class="btn-sp" href="https://github.com/sponsors/shnfatih-hash" target="_blank" rel="noopener">💖 GitHub Sponsors</a>
+      <a class="btn-gh" href="https://github.com/shnfatih-hash/yazma-eser-paralel-tercume" target="_blank" rel="noopener">⭐ GitHub &amp; Dosyalar</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="openTab('t-wave', this)">⚡ 10'lu Paralel Dalga Planlayıcı &amp; Prompt Üretici</button>
+    <button class="tab-btn" onclick="openTab('t-gloss', this)">📖 Ortak Sözlük (glossary.md) &amp; Kitapçık Önizleme</button>
+    <button class="tab-btn" onclick="openTab('t-setup', this)">📦 Tek Komutla Kurulum &amp; Kardeş Projeler</button>
+  </div>
+
+  <section id="t-wave" class="panel active">
+    <div class="card">
+      <h3 style="margin-top:0;">Paralel Subagent Dalga Planı ve Orkestrasyon Promptu</h3>
+      <div class="grid-3">
+        <div><label>Eser Adı</label><input id="w-title" type="text" value="Şerhu'l-Akâid Hâşiyesi"></div>
+        <div>
+          <label>Eser Dili</label>
+          <select id="w-lang">
+            <option>Arapça</option>
+            <option>Osmanlı Türkçesi</option>
+            <option>Farsça</option>
+            <option>Karma (Arapça – Osmanlıca)</option>
+          </select>
+        </div>
+        <div>
+          <label>İlim Dalı</label>
+          <select id="w-field">
+            <option>Kelâm / Akâid</option>
+            <option>Fıkıh &amp; Usûl</option>
+            <option>Tasavvuf</option>
+            <option>Felsefe / Mantık</option>
+            <option>Tefsir / Hadis</option>
+            <option>Tarih / Tabakât</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-3" style="margin-top:12px;">
+        <div><label>Toplam PDF Sayfa / Poz Sayısı</label><input id="w-pages" type="number" value="100"></div>
+        <div><label>Aynı Anda Çalışacak Paralel Ajan Sayısı</label><input id="w-batch" type="number" value="10"></div>
+        <div>
+          <label>Varak Düzeni</label>
+          <select id="w-split">
+            <option value="0">Tek Sayfa (1 poz = 1 sayfa)</option>
+            <option value="1">Çift Varaklı Poz (Sağ vr. a + Sol vr. b)</option>
+          </select>
+        </div>
+      </div>
+      <button class="action-btn" onclick="buildWavePlan()">🚀 Dalga Planı &amp; Prompt Üret</button>
+      <button class="action-btn" style="background:#2b6cb0;" onclick="copyOrch()">📋 Promptu Kopyala</button>
+      <span id="w-msg" style="margin-left:8px;font-weight:700;color:#1d5c55;"></span>
+      <div id="w-table"></div>
+      <label style="margin-top:14px;">Antigravity / Claude Ana Oturumuna Yapıştıracağınız Orkestrasyon İstemi</label>
+      <textarea id="w-prompt" rows="13"></textarea>
+    </div>
+  </section>
+
+  <section id="t-gloss" class="panel">
+    <div class="card">
+      <h3 style="margin-top:0;">Çakışma Korumalı Ortak Terim Sözlüğü (<code>glossary.md</code>) Örneği</h3>
+      <p style="font-size:0.9rem;color:var(--muted);">Paralel çalışan 10 alt-ajan bu tabloyu salt-okunur okur; her dalga sonunda Koordinatör yeni ıstılah adaylarını tek elden birleştirir.</p>
+      <table>
+        <thead><tr><th>Asıl İbare</th><th>Transkripsiyon</th><th>Onaylı Türkçe Karşılık</th><th>Bağlam Notu</th></tr></thead>
+        <tbody>
+          <tr><td dir="rtl" style="font-size:1.2rem;">الواجب لذاته</td><td><strong>el-vâcib li-ẕâtihî</strong></td><td>Zâtı gereği zorunlu varlık (Vâcibü'l-vücûd)</td><td>Varlığı başkasından olmayan</td></tr>
+          <tr><td dir="rtl" style="font-size:1.2rem;">الإرادة الجزئية</td><td><strong>el-irâdetü'l-cüz'iyye</strong></td><td>Cüz'î irade</td><td>Kulun ihtiyârî yönelimi</td></tr>
+          <tr><td dir="rtl" style="font-size:1.2rem;">الدور والتسلسل</td><td><strong>ed-devr ve't-teselsül</strong></td><td>Kısır döngü (devir) ve sonsuz illet zinciri (teselsül)</td><td>İspat-ı vâcib delilleri</td></tr>
+          <tr><td dir="rtl" style="font-size:1.2rem;">صح</td><td><strong>ṣaḥḥ</strong></td><td>[Kenar tashihi (sahh): ...]</td><td>Müstensihin kenardan metne eklediği tashih kaydı</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="t-setup" class="panel">
+    <div class="card">
+      <h3 style="margin-top:0;">Google Antigravity &amp; Claude Code Tek Komutla Kurulum</h3>
+      <pre class="cmd">git clone https://github.com/shnfatih-hash/yazma-eser-paralel-tercume.git "$HOME\.gemini\config\skills\yazma-eser-paralel-tercume"
+pip install Pillow pymupdf</pre>
+      <p>📦 Doğrudan ZIP İndirme: <a href="./yazma-eser-paralel-tercume.zip" download><strong>yazma-eser-paralel-tercume.zip</strong></a></p>
+      <hr style="border:none;border-top:1px solid var(--border);margin:16px 0;">
+      <h3>Kardeş Açık Kaynak Projelerimiz</h3>
+      <ul>
+        <li>📜 <strong><a href="https://huggingface.co/spaces/sahanfatih/devlet-arsivleri-soykutugu" target="_blank">devlet-arsivleri-soykutugu</a>:</strong> e-Devlet soy kütüğünden 1500'lere kadar Osmanlı arşiv araştırma becerisi.</li>
+        <li>🖋️ <strong><a href="https://huggingface.co/spaces/sahanfatih/osmanlica-resmi-evrak" target="_blank">osmanlica-resmi-evrak</a>:</strong> Ferman, Berat, İrade ve Hüccet okuma &amp; İnteraktif HTML çalışma kartı becerisi.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <strong>Projeyi faydalı buldunuz mu?</strong> Açık kaynaklı yazma eser tahkiki ve dijital beşerî bilimler AI araçlarına gönüllü destek için:
+  <a href="https://buymeacoffee.com/shnfatih8" target="_blank" rel="noopener" style="font-weight:700; color:#8a6200; margin-left:6px;">☕ Buy Me a Coffee (shnfatih8)</a> •
+  <a href="https://github.com/sponsors/shnfatih-hash" target="_blank" rel="noopener" style="font-weight:700; color:#b82578; margin-left:6px;">💖 GitHub Sponsors</a>
+</footer>
+
+<script>
+function openTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active'); btn.classList.add('active');
+}
+function buildWavePlan() {
+  const title = document.getElementById('w-title').value.trim() || 'eser.pdf';
+  const lang = document.getElementById('w-lang').value;
+  const field = document.getElementById('w-field').value;
+  const rawPages = Math.max(1, parseInt(document.getElementById('w-pages').value,10) || 100);
+  const batch = Math.max(1, parseInt(document.getElementById('w-batch').value,10) || 10);
+  const split = document.getElementById('w-split').value === '1';
+  const total = split ? rawPages * 2 : rawPages;
+  const waves = Math.ceil(total / batch);
+
+  let rows = '';
+  for (let i = 0; i < Math.min(waves, 8); i++) {
+    const s1 = i * batch + 1, s2 = Math.min(total, (i + 1) * batch);
+    rows += `<tr><td><strong>Dalga ${i+1}</strong></td><td>Sayfa ${String(s1).padStart(4,'0')} – ${String(s2).padStart(4,'0')}</td><td>${s2-s1+1} paralel subagent</td><td>Çeviri + yeni ıstılahları glossary.md içine işleme</td></tr>`;
+  }
+  if (waves > 8) rows += `<tr><td colspan="4"><em>... Toplam ${waves} dalga (${total} sayfa/yüz) + 1 Son Tutarlılık Editörü Ajanı</em></td></tr>`;
+  document.getElementById('w-table').innerHTML = `<table><thead><tr><th>Dalga</th><th>Sayfa Aralığı</th><th>Paralel Ajan</th><th>Görev</th></tr></thead><tbody>${rows}</tbody></table>`;
+
+  document.getElementById('w-prompt').value =
+`Bu proje klasöründeki "${title}" (${lang} — ${field}) yazma eser PDF dosyamı yazma-eser-paralel-tercume becerisiyle paralel alt-ajan orkestrasyonu kullanarak tercüme et:
+
+1. Hazırlık ve Başlangıç Sözlüğü (glossary.md):
+   - python scripts/yazma_hazirla.py prepare eser.pdf --out ./proje_ciktisi --batch-size ${batch}${split ? ' --split-folios' : ''} komutunu çalıştır.
+   - İlk 2–3 sayfayı (zahriye ve mukaddime) ve son sayfayı (ferağ kaydı) okuyarak ${field} alanına ait temel ıstılahları ortak proje_ciktisi/glossary.md dosyasına yaz.
+
+2. ${batch}'lu Paralel Alt-Ajan (Subagents) Dalgaları (Toplam ${total} Sayfa / ${waves} Dalga):
+   - Sayfaları ${batch}'ar ${batch}'ar paralel alt-ajanlara dağıt. Aynı anda çalışan ${batch} ajan kendi sayfasını çevirip proje_ciktisi/ceviriler/sayfa_XXXX.md olarak kaydetsin; ortak glossary.md sözlüğünü salt-okunur okusun, derkenar (sahh / minhu) notlarını ayrı başlıkta göstersin, okunamayan yerleri uydurmayıp [...] şerhi düşsün ve yeni terimleri sayfa sonundaki Yeni Terim Adayları tablosuna yazsın.
+   - Her ${batch}'lu dalga bittiğinde yeni terim adaylarını glossary.md içine sen birleştir ve sonraki dalgayı başlat.
+
+3. Son Tutarlılık ve Tahkik Editörü Ajanı:
+   - Tüm sayfalar tamamlanınca python scripts/birlestir_ve_denetle.py ./proje_ciktisi --title "${title}" komutunu çalıştır ve ayrı bir Tutarlılık Editörü Alt-Ajanı görevlendirerek sayfa geçişlerindeki yarım cümleleri (rekabe) ve tüm sayfalardaki kavram birliğini denetletip nihai tam_metin_tercume.md ve tercume_kitapcigi.html dosyalarını oluştur.`;
+}
+function copyOrch() {
+  const el = document.getElementById('w-prompt'); el.select(); navigator.clipboard.writeText(el.value);
+  document.getElementById('w-msg').textContent = '✓ Kopyalandı!';
+  setTimeout(() => document.getElementById('w-msg').textContent = '', 2500);
+}
+buildWavePlan();
+</script>
+</body>
+</html>

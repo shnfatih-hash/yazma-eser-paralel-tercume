@@ -18,10 +18,10 @@ jobs:
       - name: Push to Hugging Face Space (if HF_TOKEN is configured)
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          HF_USERNAME: ${{ vars.HF_USERNAME }}
+          HF_USERNAME: ${{ vars.HF_USERNAME || 'sahanfatih' }}
         run: |
-          if [ -z "$HF_TOKEN" ] || [ -z "$HF_USERNAME" ]; then
-            echo "HF_TOKEN veya HF_USERNAME henüz tanımlanmamış; Hugging Face senkronizasyonu atlandı."
+          if [ -z "$HF_TOKEN" ]; then
+            echo "HF_TOKEN henüz tanımlanmamış; Hugging Face senkronizasyonu atlandı."
             exit 0
           fi
           git config user.name "github-actions[bot]"

@@ -3,9 +3,7 @@ title: Yazma Eser Paralel Tercüme & Tahkik AI Skill
 emoji: 📖
 colorFrom: green
 colorTo: yellow
-sdk: gradio
-sdk_version: 5.23.0
-app_file: app.py
+sdk: static
 pinned: true
 license: mit
 short_description: 10 paralel alt-ajan ve ortak sözlükle yazma eser tercüme aracı
@@ -15,6 +13,7 @@ short_description: 10 paralel alt-ajan ve ortak sözlükle yazma eser tercüme a
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Bir%20Kahve%20Ismarla-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/shnfatih8)
 [![GitHub Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-Projeye%20Destek%20Ol-ea4aaa?style=for-the-badge&logo=githubsponsors&logoColor=white)](https://github.com/sponsors/shnfatih-hash)
+[![Hugging Face Space](https://img.shields.io/badge/🤗%20Hugging%20Face-Canlı%20Web%20Aracı-FFD21E?style=for-the-badge)](https://huggingface.co/spaces/sahanfatih/yazma-eser-paralel-tercume)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-shnfatih--hash%2Fyazma--eser--paralel--tercume-181717?style=for-the-badge&logo=github)](https://github.com/shnfatih-hash/yazma-eser-paralel-tercume)
 
 Çok sayfalı **Arapça, Osmanlıca ve Farsça el yazması (*mahtût*)** veya klasik matbu eser PDF/görsel dosyalarını tek tek sayfa beklemek yerine **10'arlı paralel alt-ajan (`subagents`) dalgaları**, **çakışma korumalı ortak terim sözlüğü (`glossary.md`)**, **1:1 piksel şerh aparatı** ve **son Tutarlılık & Tahkik Editörü Ajanı** ile akademik Türkçeye çeviren açık kaynaklı yapay zekâ becerisi (*Agent Skill* + *Canlı Web Aracı*).
