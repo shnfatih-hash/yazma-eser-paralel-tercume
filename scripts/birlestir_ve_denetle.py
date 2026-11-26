@@ -17,6 +17,28 @@ from pathlib import Path
 
 
 UNCERTAIN_PATTERN = re.compile(r"(\[\.\.\.[^\]]*\]|\[[^\]\n]{1,40}\?\]|\(!\))")
+HARAKAT_AND_CTRL_RE = re.compile(r"[\u064B-\u065F\u0670\u0640\u200C\u200D]")
+
+
+def normalize_ottoman_arabic(text: str) -> str:
+    """
+    Arapça ve Osmanlıca/Farsça klavye/kaynak kodlamaları arasındaki Ye, Kef,
+    Sağır Kef, Elif ve hareke/ZWNJ farklarını kanonik biçimde eşitler.
+    """
+    if not text:
+        return ""
+    s = HARAKAT_AND_CTRL_RE.sub("", text)
+    s = (
+        s.replace("\u064a", "\u06cc")  # Arabic Yeh (ي) -> Farsi/Ottoman Yeh (ی)
+        .replace("\u0649", "\u06cc")   # Alef Maksura (ى) -> Farsi/Ottoman Yeh (ی)
+        .replace("\u0643", "\u06a9")   # Arabic Kaf (ك) -> Keheh (ک)
+        .replace("\u06af", "\u06a9")   # Gaf (گ) -> Keheh (ک)
+        .replace("\u06ad", "\u06a9")   # Sağır Kef (ڭ) -> Keheh (ک) esnek arama için
+        .replace("\u0623", "\u0627")   # أ -> ا
+        .replace("\u0625", "\u0627")   # إ -> ا
+        .replace("\u0622", "\u0627")   # آ -> ا
+    )
+    return " ".join(s.split())
 
 
 def esc(text: str) -> str:
@@ -60,6 +82,7 @@ def build_interactive_html(title: str, pages: list[dict], terms: list[dict], fla
           <td class="rtl">{esc(t['ibare'])}</td>
           <td><strong>{esc(t['transkripsiyon'])}</strong></td>
           <td>{esc(t['karsilik'])}</td>
+          <td>{t.get('gecis_sayisi', 0)} sayfa</td>
           <td>{esc(t['not'])}</td>
         </tr>
         """
@@ -124,10 +147,10 @@ def build_interactive_html(title: str, pages: list[dict], terms: list[dict], fla
   </div>
   <section id="t-pages" class="panel active">{page_cards or '<div class="card">Henüz çevrilmiş sayfa bulunamadı.</div>'}</section>
   <section id="t-glossary" class="panel card">
-    <input class="search" type="search" placeholder="Istılah veya Türkçe karşılık ara..." oninput="filterRows(this.value)">
+    <input class="search" type="search" placeholder="Istılah veya Türkçe karşılık ara (ي/ی ve ك/ک/ڭ uyumlu)..." oninput="filterRows(this.value)">
     <table id="tbl-terms">
-      <thead><tr><th>Asıl İbare</th><th>Transkripsiyon</th><th>Onaylı Türkçe Karşılık</th><th>Not</th></tr></thead>
-      <tbody>{term_rows or '<tr><td colspan="4">Terim kaydı yok.</td></tr>'}</tbody>
+      <thead><tr><th>Asıl İbare</th><th>Transkripsiyon</th><th>Onaylı Türkçe Karşılık</th><th>Metinde Geçiş</th><th>Not</th></tr></thead>
+      <tbody>{term_rows or '<tr><td colspan="5">Terim kaydı yok.</td></tr>'}</tbody>
     </table>
   </section>
   <section id="t-flags" class="panel card">
@@ -138,6 +161,13 @@ def build_interactive_html(title: str, pages: list[dict], terms: list[dict], fla
   </section>
 </main>
 <script>
+function normOsm(str) {{
+  return (str || '').toLowerCase()
+    .replace(/[\u064B-\u065F\u0670\u0640\u200C\u200D]/g, '')
+    .replace(/[\u064a\u0649]/g, '\u06cc')
+    .replace(/[\u0643\u06af\u06ad]/g, '\u06a9')
+    .replace(/[â]/g, 'a').replace(/[î]/g, 'i').replace(/[û]/g, 'u');
+}}
 function showTab(id, btn) {{
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -145,9 +175,9 @@ function showTab(id, btn) {{
   btn.classList.add('active');
 }}
 function filterRows(q) {{
-  const s = q.trim().toLowerCase();
+  const s = normOsm(q.trim());
   document.querySelectorAll('#tbl-terms tbody tr.filter-row').forEach(r => {{
-    r.style.display = r.innerText.toLowerCase().includes(s) ? '' : 'none';
+    r.style.display = normOsm(r.innerText).includes(s) ? '' : 'none';
   }});
 }}
 </script>
@@ -192,6 +222,18 @@ def main() -> None:
 
     glossary_text = glossary_path.read_text(encoding="utf-8") if glossary_path.exists() else ""
     terms = parse_glossary_terms(glossary_text)
+
+    # Kanonik Osmanlıca/Arapça Unicode eşitlemesi ile her ıstılahın kaç sayfada geçtiğini denetle
+    norm_pages = [(p["no"], normalize_ottoman_arabic(p["icerik"]), p["icerik"].lower()) for p in pages]
+    for t in terms:
+        norm_ibare = normalize_ottoman_arabic(t["ibare"])
+        karsilik_low = t["karsilik"].lower().split("(")[0].strip()
+        hit_pages = [
+            pno
+            for pno, np_txt, low_txt in norm_pages
+            if (norm_ibare and norm_ibare in np_txt) or (len(karsilik_low) >= 4 and karsilik_low in low_txt)
+        ]
+        t["gecis_sayisi"] = len(hit_pages)
 
     combined_md = [f"# {args.title}\n"]
     for p in pages:
