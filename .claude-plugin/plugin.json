@@ -1,0 +1,14 @@
+{
+  "name": "yazma-eser-paralel-tercume",
+  "version": "1.2.0",
+  "description": "Çok sayfalı Arapça, Osmanlıca ve Farsça el yazması eserleri 10'lu paralel alt-ajan dalgaları, ortak glossary.md sözlüğü, çift çıktı (tahkikli + akıcı saf metin) ve İnteraktif HTML kitapçık ile tercüme becerisi.",
+  "author": {
+    "name": "Fatih Şahan",
+    "url": "https://github.com/shnfatih-hash"
+  },
+  "repository": "https://github.com/shnfatih-hash/yazma-eser-paralel-tercume",
+  "license": "MIT",
+  "skills": [
+    "."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "yazma-eser-paralel-tercume",
+  "owner": {
+    "name": "Fatih Şahan",
+    "url": "https://github.com/shnfatih-hash"
+  },
+  "plugins": [
+    {
+      "name": "yazma-eser-paralel-tercume",
+      "source": "./",
+      "description": "10 paralel alt-ajan, ortak terim sözlüğü ve çift çıktı moduyla Arapça/Osmanlıca/Farsça yazma eser tercüme becerisi."
+    }
+  ]
+}

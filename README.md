@@ -76,6 +76,10 @@ git clone https://github.com/shnfatih-hash/yazma-eser-paralel-tercume.git "$HOME
 # macOS / Linux — Google Antigravity veya Claude Code
 git clone https://github.com/shnfatih-hash/yazma-eser-paralel-tercume.git ~/.gemini/config/skills/yazma-eser-paralel-tercume
 git clone https://github.com/shnfatih-hash/yazma-eser-paralel-tercume.git ~/.claude/skills/yazma-eser-paralel-tercume
+
+# Claude Code Plugin Marketplace ile tek komutla kurulum:
+claude plugin marketplace add shnfatih-hash/yazma-eser-paralel-tercume
+claude plugin install yazma-eser-paralel-tercume@yazma-eser-paralel-tercume
 ```
 
 ---
