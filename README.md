@@ -6,7 +6,7 @@ colorTo: yellow
 sdk: static
 pinned: true
 license: mit
-short_description: 10 paralel alt-ajan ve ortak sözlükle yazma eser tercüme aracı
+short_description: 10 paralel alt-ajan ve ortak sözlükle yazma eser tercümesi
 ---
 
 # Yazma Eser Paralel Alt-Ajan Tercüme ve Tahkik AI Skill (`yazma-eser-paralel-tercume`)
