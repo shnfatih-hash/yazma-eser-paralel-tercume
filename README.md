@@ -93,6 +93,17 @@ Bu proje klasöründeki el yazması PDF dosyamı `yazma-eser-paralel-tercume` be
 
 ---
 
+## 🤝 Soru Sor, Terim Ekle ve Katkıda Bulun
+
+Kod veya Git bilmeden de birkaç saniyede teknik soru sorabilir, yeni ıstılah (`glossary.md`) veya prompt şablonu katkısı gönderebilirsiniz (ayrıntılar: [CONTRIBUTING.md](CONTRIBUTING.md)):
+
+- ❓ **[Teknik Soru & Kurulum Desteği](https://github.com/shnfatih-hash/yazma-eser-paralel-tercume/issues/new?template=01-soru-ve-teknik-destek.yml)**
+- 📖 **[Yeni Istılah / Sözlük (`glossary.md`) Katkısı](https://github.com/shnfatih-hash/yazma-eser-paralel-tercume/issues/new?template=02-terim-ve-sozluk-katkisi.yml)**
+- 💡 **[Yeni Prompt veya Özellik Önerisi](https://github.com/shnfatih-hash/yazma-eser-paralel-tercume/issues/new?template=03-prompt-ve-yontem-onerisi.yml)**
+- 🐛 **[Hata Bildirimi](https://github.com/shnfatih-hash/yazma-eser-paralel-tercume/issues/new?template=04-hata-bildirimi.yml)** • 💬 **[Hugging Face Topluluk](https://huggingface.co/spaces/sahanfatih/yazma-eser-paralel-tercume/discussions)**
+
+---
+
 ## ♥ Projeye Gönüllü Destek
 
 Bu proje tamamen ücretsiz ve açık kaynaklıdır. Çalışmayı faydalı bulduysanız bir kahve ısmarlayarak veya GitHub Sponsors üzerinden destek olabilirsiniz:

@@ -1,0 +1,17 @@
+name: "💡 Yeni Prompt, Yöntem veya Özellik Önerisi"
+description: "Yazma eser tercümesinde işe yarayan prompt şablonunuzu, yeni bir alan profilini veya araç geliştirme fikrinizi paylaşın."
+title: "[Öneri] "
+labels: ["katki-prompt"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: "Öneriniz veya Paylaşmak İstediğiniz Prompt Şablonu"
+      placeholder: "Çalışmalarınızda verim aldığınız promptu veya eklenmesini istediğiniz özelliği buraya yazın."
+    validations:
+      required: true
+  - type: textarea
+    id: benefit
+    attributes:
+      label: "Hangi Tür Yazma Eserlerde İşe Yarıyor?"
+      placeholder: "Örn: Şerh-hâşiyeli medrese yazmaları, Farsça mesneviler, Osmanlıca tıp risaleleri..."

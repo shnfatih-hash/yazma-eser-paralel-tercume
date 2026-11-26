@@ -60,6 +60,7 @@
     <button class="tab-btn active" onclick="openTab('t-wave', this)">⚡ 10'lu Paralel Dalga Planlayıcı &amp; Prompt Üretici</button>
     <button class="tab-btn" onclick="openTab('t-gloss', this)">📖 Ortak Sözlük (glossary.md) &amp; Kitapçık Önizleme</button>
     <button class="tab-btn" onclick="openTab('t-setup', this)">📦 Tek Komutla Kurulum &amp; Kardeş Projeler</button>
+    <button class="tab-btn" onclick="openTab('t-contrib', this)">🤝 Soru Sor &amp; Katkı Sun</button>
   </div>
 
   <section id="t-wave" class="panel active">
@@ -145,6 +146,36 @@ pip install Pillow pymupdf</pre>
         <li>📜 <strong><a href="https://huggingface.co/spaces/sahanfatih/devlet-arsivleri-soykutugu" target="_blank">devlet-arsivleri-soykutugu</a>:</strong> e-Devlet soy kütüğünden 1500'lere kadar Osmanlı arşiv araştırma becerisi.</li>
         <li>🖋️ <strong><a href="https://huggingface.co/spaces/sahanfatih/osmanlica-resmi-evrak" target="_blank">osmanlica-resmi-evrak</a>:</strong> Ferman, Berat, İrade ve Hüccet okuma &amp; İnteraktif HTML çalışma kartı becerisi.</li>
       </ul>
+    </div>
+  </section>
+
+  <section id="t-contrib" class="panel">
+    <div class="card">
+      <h3 style="margin-top:0;">🤝 Teknik Soru Sor, Yeni Istılah Öner veya Katkıda Bulun</h3>
+      <p style="font-size:0.93rem;color:var(--muted);">Git veya yazılım bilmeden de aşağıdaki hazır formlarla sorunuzu iletebilir, <code>glossary.md</code> için yeni ıstılah karşılığı veya kendi prompt şablonunuzu paylaşabilirsiniz. Tüm soru ve katkılar kalıcı bilgi havuzunda toplanır.</p>
+      <div class="grid-2">
+        <div style="border:1px solid var(--border);border-radius:10px;padding:15px;background:#faf7f0;">
+          <strong>❓ Teknik Soru &amp; Kurulum Desteği</strong>
+          <p style="font-size:0.88rem;color:var(--muted);margin:6px 0 12px;">PDF ayırma, 10'lu paralel alt-ajan çalıştırma, Python kurulumu veya Chrome MCP sorularınız.</p>
+          <a class="action-btn" style="display:inline-block;text-decoration:none;margin-top:0;" href="https://github.com/shnfatih-hash/yazma-eser-paralel-tercume/issues/new?template=01-soru-ve-teknik-destek.yml" target="_blank" rel="noopener">Soru Formunu Aç ↗</a>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:10px;padding:15px;background:#faf7f0;">
+          <strong>📖 Yeni Istılah / Sözlük (glossary.md) Katkısı</strong>
+          <p style="font-size:0.88rem;color:var(--muted);margin:6px 0 12px;">Kelâm, tasavvuf, fıkıh, mantık veya Osmanlıca yazmalar için yeni terim ve TDV İA karşılığı önerin.</p>
+          <a class="action-btn" style="display:inline-block;text-decoration:none;margin-top:0;background:#8a6200;" href="https://github.com/shnfatih-hash/yazma-eser-paralel-tercume/issues/new?template=02-terim-ve-sozluk-katkisi.yml" target="_blank" rel="noopener">Sözlük Katkısı Gönder ↗</a>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:10px;padding:15px;background:#faf7f0;">
+          <strong>💡 Yeni Prompt veya Özellik Önerisi</strong>
+          <p style="font-size:0.88rem;color:var(--muted);margin:6px 0 12px;">Çalışmalarınızda verim aldığınız prompt şablonunu veya yeni bir alan profilini paylaşın.</p>
+          <a class="action-btn" style="display:inline-block;text-decoration:none;margin-top:0;background:#2b6cb0;" href="https://github.com/shnfatih-hash/yazma-eser-paralel-tercume/issues/new?template=03-prompt-ve-yontem-onerisi.yml" target="_blank" rel="noopener">Öneri Gönder ↗</a>
+        </div>
+        <div style="border:1px solid var(--border);border-radius:10px;padding:15px;background:#faf7f0;">
+          <strong>🐛 Hata Bildirimi &amp; 💬 Topluluk Tartışmaları</strong>
+          <p style="font-size:0.88rem;color:var(--muted);margin:6px 0 12px;">Betik/HTML hatası bildirin veya Hugging Face Topluluk panosunda doğrudan tartışın.</p>
+          <a class="action-btn" style="display:inline-block;text-decoration:none;margin-top:0;background:#9b1c1c;" href="https://github.com/shnfatih-hash/yazma-eser-paralel-tercume/issues/new?template=04-hata-bildirimi.yml" target="_blank" rel="noopener">Hata Bildir ↗</a>
+          <a class="action-btn" style="display:inline-block;text-decoration:none;margin-top:0;margin-left:6px;background:#24292f;" href="https://huggingface.co/spaces/sahanfatih/yazma-eser-paralel-tercume/discussions" target="_blank" rel="noopener">HF Topluluk ↗</a>
+        </div>
+      </div>
     </div>
   </section>
 </main>

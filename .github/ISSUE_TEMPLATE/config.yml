@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Hugging Face Topluluk Tartışmaları (Hesapsız / Hızlı Soru)
+    url: https://huggingface.co/spaces/sahanfatih/yazma-eser-paralel-tercume/discussions
+    about: Canlı web aracı üzerinden soru sormak, örnek çıktı paylaşmak veya fikir tartışmak için.

@@ -1,0 +1,31 @@
+name: "📖 Yeni Istılah / Sözlük (glossary.md) Katkısı"
+description: "Kelâm, fıkıh, tasavvuf, mantık veya Osmanlıca yazma eserler için yeni terim karşılığı veya uzmanlık sözlüğü önerin."
+title: "[Sözlük Katkısı] "
+labels: ["katki-sozluk"]
+body:
+  - type: dropdown
+    id: discipline
+    attributes:
+      label: "İlim Dalı"
+      options:
+        - Kelâm / Akâid
+        - Tasavvuf / Ekberî Gelenek
+        - Fıkıh & Usûl
+        - Felsefe / Mantık
+        - Tefsir / Hadis
+        - Tarih / Tabakât / Edebiyat
+    validations:
+      required: true
+  - type: textarea
+    id: terms
+    attributes:
+      label: "Önerdiğiniz Istılah(lar) ve Karşılıkları"
+      description: "Asıl Arapça/Osmanlıca ibare | TDV İA transkripsiyonu | Onaylı Türkçe karşılık | Bağlam/disiplin farkı"
+      placeholder: "Örn: التكوين | et-tekvîn | Tekvîn (ezelî yaratma sıfatı) | Mâtürîdî kelâmında mükevvenden ayrı hakiki sıfat"
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: "Kaynak / Eser Referansı (İsteğe Bağlı)"
+      placeholder: "Örn: TDV İA ilgili madde, Şerhu'l-Akâid, Kasîde-i Nûniyye şerhi..."

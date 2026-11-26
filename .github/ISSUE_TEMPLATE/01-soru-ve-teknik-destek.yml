@@ -1,0 +1,37 @@
+name: "❓ Teknik Soru & Kurulum Desteği"
+description: "Kurulum, PDF/varak ayırma, 10'lu paralel alt-ajan çalıştırma veya Chrome DevTools MCP hakkında soru sorun."
+title: "[Soru] "
+labels: ["soru-destek"]
+body:
+  - type: markdown
+    attributes:
+      value: "Sorunuzu aşağıya yazın; verilen cevaplar diğer araştırmacılar için kalıcı bir bilgi havuzunda toplanacaktır."
+  - type: dropdown
+    id: platform
+    attributes:
+      label: "Kullandığınız Ortam / Araç"
+      options:
+        - Google Antigravity
+        - Claude Code / Claude Desktop
+        - Cursor / Codex
+        - Hugging Face Canlı Web Aracı
+        - Doğrudan Python Betikleri
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: "İşletim Sistemi"
+      options:
+        - Windows
+        - macOS
+        - Linux
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: "Sorunuz / Takıldığınız Adım"
+      placeholder: "Hangi adımda ne ile karşılaştığınızı ve varsa hata mesajını buraya yapıştırın."
+    validations:
+      required: true

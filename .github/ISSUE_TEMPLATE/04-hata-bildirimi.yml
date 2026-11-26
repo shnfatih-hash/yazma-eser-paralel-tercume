@@ -1,0 +1,17 @@
+name: "🐛 Hata / Betik / Tahkik Sorunu Bildirimi"
+description: "Python betiklerinde (yazma_hazirla.py, birlestir_ve_denetle.py), HTML kitapçıkta veya okuma kurallarında hata bildirin."
+title: "[Hata] "
+labels: ["hata"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: "Karşılaşılan Hata"
+      placeholder: "Beklenen davranış ile gerçekleşen hatayı kısaca açıklayın."
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: "Hata Çıktısı / Örnek Satır (Varsa)"
+      render: text
