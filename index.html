@@ -73,7 +73,7 @@
             <option>Arapça</option>
             <option>Osmanlı Türkçesi</option>
             <option>Farsça</option>
-            <option>Karma (Arapça – Osmanlıca)</option>
+            <option>Karma / Mülemma (Arapça – Osmanlıca – Farsça)</option>
           </select>
         </div>
         <div>
@@ -89,8 +89,17 @@
         </div>
       </div>
       <div class="grid-3" style="margin-top:12px;">
+        <div>
+          <label>Uzmanlık Sözlük Profili</label>
+          <select id="w-profile">
+            <option value="kelam-serh-tasavvuf">Kelâm, Şerh–Hâşiye &amp; Tasavvuf (Nûniyye / Karsî)</option>
+            <option value="genel">Genel Yazma Eser Tahkiki</option>
+          </select>
+        </div>
         <div><label>Toplam PDF Sayfa / Poz Sayısı</label><input id="w-pages" type="number" value="100"></div>
         <div><label>Aynı Anda Çalışacak Paralel Ajan Sayısı</label><input id="w-batch" type="number" value="10"></div>
+      </div>
+      <div class="grid-3" style="margin-top:12px;">
         <div>
           <label>Varak Düzeni</label>
           <select id="w-split">
@@ -156,11 +165,16 @@ function buildWavePlan() {
   const title = document.getElementById('w-title').value.trim() || 'eser.pdf';
   const lang = document.getElementById('w-lang').value;
   const field = document.getElementById('w-field').value;
+  const profile = document.getElementById('w-profile').value;
   const rawPages = Math.max(1, parseInt(document.getElementById('w-pages').value,10) || 100);
   const batch = Math.max(1, parseInt(document.getElementById('w-batch').value,10) || 10);
   const split = document.getElementById('w-split').value === '1';
   const total = split ? rawPages * 2 : rawPages;
   const waves = Math.ceil(total / batch);
+  const profFlag = profile === 'kelam-serh-tasavvuf' ? ' --profile kelam-serh-tasavvuf' : '';
+  const profNote = profile === 'kelam-serh-tasavvuf'
+    ? '\n   - Mâtürîdî–Eş‘arî–Mu‘tezilî kelâmı, Kasîde-i Nûniyye / Şerhu\'l-Akâid şerhleri, Dâvûd-i Karsî geleneği, mantık ve Ekberî tasavvuf (vahdet-i vücûd) ıstılahlarında TDV İA standardını uygula; disiplinlerarası anlam farklarını koru.'
+    : '';
 
   let rows = '';
   for (let i = 0; i < Math.min(waves, 8); i++) {
@@ -174,15 +188,17 @@ function buildWavePlan() {
 `Bu proje klasöründeki "${title}" (${lang} — ${field}) yazma eser PDF dosyamı yazma-eser-paralel-tercume becerisiyle paralel alt-ajan orkestrasyonu kullanarak tercüme et:
 
 1. Hazırlık ve Başlangıç Sözlüğü (glossary.md):
-   - python scripts/yazma_hazirla.py prepare eser.pdf --out ./proje_ciktisi --batch-size ${batch}${split ? ' --split-folios' : ''} komutunu çalıştır.
-   - İlk 2–3 sayfayı (zahriye ve mukaddime) ve son sayfayı (ferağ kaydı) okuyarak ${field} alanına ait temel ıstılahları ortak proje_ciktisi/glossary.md dosyasına yaz.
+   - python scripts/yazma_hazirla.py prepare eser.pdf --out ./proje_ciktisi --batch-size ${batch}${split ? ' --split-folios' : ''}${profFlag} komutunu çalıştır.
+   - İlk 2–3 sayfayı (zahriye ve mukaddime) ve son sayfayı (ferağ kaydı) okuyarak ${field} alanına ait temel ıstılahları ortak proje_ciktisi/glossary.md dosyasına yaz.${profNote}
 
-2. ${batch}'lu Paralel Alt-Ajan (Subagents) Dalgaları (Toplam ${total} Sayfa / ${waves} Dalga):
-   - Sayfaları ${batch}'ar ${batch}'ar paralel alt-ajanlara dağıt. Aynı anda çalışan ${batch} ajan kendi sayfasını çevirip proje_ciktisi/ceviriler/sayfa_XXXX.md olarak kaydetsin; ortak glossary.md sözlüğünü salt-okunur okusun, derkenar (sahh / minhu) notlarını ayrı başlıkta göstersin, okunamayan yerleri uydurmayıp [...] şerhi düşsün ve yeni terimleri sayfa sonundaki Yeni Terim Adayları tablosuna yazsın.
+2. ${batch}'lu Paralel Alt-Ajan (Subagents) Dalgaları ("Sıfır Kayıp" & "Sıfır Uydurma" — Toplam ${total} Sayfa / ${waves} Dalga):
+   - Sayfaları ${batch}'ar ${batch}'ar paralel alt-ajanlara dağıt. Aynı anda çalışan ${batch} ajan kendi sayfasını çevirip proje_ciktisi/ceviriler/sayfa_XXXX.md olarak kaydetsin ve ortak glossary.md sözlüğünü salt-okunur okusun.
+   - Osmanlıca veya karma (mülemma) metinlerde hiçbir cümleyi "zaten Türkçe" ya da "klasik hamdele/dua" diyerek atlamasın; vakıf, temellük ve ketebe kayıtları dâhil tamamını günümüz akademik Türkçesine eksiksiz aktarsın.
+   - Ana metin (kavluhû) ile şerh katmanını çift tırnakla ayırsın; kenardaki sahh (صح) tashihlerini doğrudan ait olduğu cümleye yerleştirsin; minhü (منه) ve derkenar notlarını sona yığmadan ilgili paragrafın hemen altında göstersin; okunamayan yerleri uydurmayıp [...] şerhi düşsün; zamir mercii veya doktriner çift anlamlılıklarda paragraf altına Not: açsın.
    - Her ${batch}'lu dalga bittiğinde yeni terim adaylarını glossary.md içine sen birleştir ve sonraki dalgayı başlat.
 
-3. Son Tutarlılık ve Tahkik Editörü Ajanı:
-   - Tüm sayfalar tamamlanınca python scripts/birlestir_ve_denetle.py ./proje_ciktisi --title "${title}" komutunu çalıştır ve ayrı bir Tutarlılık Editörü Alt-Ajanı görevlendirerek sayfa geçişlerindeki yarım cümleleri (rekabe) ve tüm sayfalardaki kavram birliğini denetletip nihai tam_metin_tercume.md ve tercume_kitapcigi.html dosyalarını oluştur.`;
+3. Son Tutarlılık ve Tahkik Editörü Ajanı (Tahkikli + Varaksız Akıcı Saf Metin):
+   - Tüm sayfalar tamamlanınca python scripts/birlestir_ve_denetle.py ./proje_ciktisi --title "${title}" komutunu çalıştır ve ayrı bir Tutarlılık Editörü Alt-Ajanı görevlendirerek rekabe tekrarlarını temizletip bölünen cümleleri birleştir; hem atıflı tam_metin_tercume.md hem kesintisiz tam_metin_akici_okuma.md hem de tercume_kitapcigi.html dosyalarını oluştur.`;
 }
 function copyOrch() {
   const el = document.getElementById('w-prompt'); el.select(); navigator.clipboard.writeText(el.value);

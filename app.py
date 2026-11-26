@@ -51,6 +51,7 @@ def plan_parallel_waves(
     eser_adi: str,
     dil: str,
     ilim_dali: str,
+    profil: str,
     toplam_sayfa: int,
     paralel_ajan: int,
     cift_varak: bool,
@@ -60,6 +61,7 @@ def plan_parallel_waves(
     detected_note = ""
     pages = max(1, int(toplam_sayfa))
     batch = max(1, int(paralel_ajan))
+    is_kelam_preset = "Kelâm" in (profil or "")
 
     if pdf_file:
         try:
@@ -79,6 +81,7 @@ def plan_parallel_waves(
     plan_md = [
         f"### Paralel Orkestrasyon Planı {detected_note}",
         f"- **Eser / Dil / İlim Dalı:** {eser_adi or 'Belirtilmedi'} • {dil} • {ilim_dali}",
+        f"- **Uzmanlık Profili:** {profil}",
         f"- **Toplam İşlenecek Sayfa / Yüz:** **{effective_pages}** ({'çift varaklı pozlar Sağ/Sol ayrılacak' if cift_varak else 'tekil sayfa'})",
         f"- **Paralel Alt-Ajan (`Subagent`) Dalga Boyutu:** Aynı anda **{batch}** ajan",
         f"- **Toplam Dalga Sayısı:** **{waves} dalga** + **1 Son Tutarlılık Editörü Ajanı**",
@@ -96,19 +99,28 @@ def plan_parallel_waves(
         plan_md.append(f"| ... | *(Toplam {waves} dalga)* | ... | Tüm dalgalar bitince `birlestir_ve_denetle.py` + Tutarlılık Editörü Ajanı |")
 
     split_flag = " --split-folios" if cift_varak else ""
+    profile_flag = " --profile kelam-serh-tasavvuf" if is_kelam_preset else ""
+    preset_clause = (
+        "\n   - Mâtürîdî–Eş‘arî–Mu‘tezilî kelâmı, Kasîde-i Nûniyye / Şerhu'l-Akâid şerhleri, Dâvûd-i Karsî geleneği, mantık ve Ekberî tasavvuf (vahdet-i vücûd) ıstılahlarında TDV İA standardını uygula; aynı ıstılahın kelâm, mantık ve tasavvuftaki anlam farklarını koru."
+        if is_kelam_preset
+        else ""
+    )
+
     prompt = f"""Bu proje klasöründeki `{eser_adi or 'eser.pdf'}` ({dil} — {ilim_dali}) yazma eserini `yazma-eser-paralel-tercume` becerisini kullanarak paralel alt-ajan orkestrasyonuyla tercüme et:
 
 1. **Hazırlık ve Başlangıç Sözlüğü (`glossary.md`):**
-   - `python scripts/yazma_hazirla.py prepare eser.pdf --out ./proje_ciktisi --batch-size {batch}{split_flag}` komutunu çalıştır.
-   - İlk 2–3 sayfayı (zahriye + dibâce) ve son sayfayı (ferağ kaydı) okuyarak {ilim_dali} alanına ait temel ıstılahları ortak `proje_ciktisi/glossary.md` dosyasına işle.
+   - `python scripts/yazma_hazirla.py prepare eser.pdf --out ./proje_ciktisi --batch-size {batch}{split_flag}{profile_flag}` komutunu çalıştır.
+   - İlk 2–3 sayfayı (zahriye + dibâce) ve son sayfayı (ferağ kaydı) okuyarak {ilim_dali} alanına ait temel ıstılahları ortak `proje_ciktisi/glossary.md` dosyasına işle.{preset_clause}
 
-2. **{batch}'lu Paralel Alt-Ajan (`Subagents`) Dalgaları (Toplam {effective_pages} Sayfa / {waves} Dalga):**
-   - Sayfaları **{batch}'ar {batch}'ar paralel alt-ajanlara** dağıt. Her ajan kendi sayfasını çevirip `proje_ciktisi/ceviriler/sayfa_XXXX.md` olarak kaydetsin; ortak `glossary.md` sözlüğünü salt-okunur okusun, derkenar (`sahh` / `minhu`) notlarını ayrı başlıkta göstersin, okunamayan yerleri asla uydurmayıp `[...]` veya `[kelime?]` şerhi düşsün ve yeni terimleri sayfa sonundaki `Yeni Terim Adayları` tablosuna yazsın.
+2. **{batch}'lu Paralel Alt-Ajan (`Subagents`) Dalgaları ("Sıfır Kayıp" & "Sıfır Uydurma" — Toplam {effective_pages} Sayfa / {waves} Dalga):**
+   - Sayfaları **{batch}'ar {batch}'ar paralel alt-ajanlara** dağıt. Her ajan kendi sayfasını çevirip `proje_ciktisi/ceviriler/sayfa_XXXX.md` olarak kaydetsin ve ortak `glossary.md` sözlüğünü salt-okunur okusun.
+   - **Tam Metin Sadakati:** Osmanlıca veya karma (*mülemma*) metinlerde hiçbir cümleyi "zaten Türkçe" ya da "klasik hamdele/dua" diyerek atlamasın; başlıklardan beyitlere, vakıf, temellük ve ketebe kayıtlarına kadar tamamını günümüz akademik Türkçesine eksiksiz aktarsın.
+   - **Katman ve Şerh Hassasiyeti:** Ana metin (`ḳavluhû`) ile şerh katmanını çift tırnakla (`" "`) ayırsın; kenardaki `sahh (صح)` tashihlerini doğrudan ait olduğu cümleye yerleştirsin; `minhü (منه)` ve derkenar notlarını sona yığmadan ilgili paragrafın hemen altında göstersin; okunamayan yerleri uydurmayıp `[...]` veya `[kelime?]` şerhi düşsün; zamir mercii veya doktriner çift anlamlılıklarda paragraf altına `Not:` açsın ve yeni terimleri `Yeni Terim Adayları` tablosuna yazsın.
    - Her {batch}'lu dalga bittiğinde yeni terimleri `glossary.md` dosyasına tek elden sen ekle ve bir sonraki dalgayı başlat.
 
-3. **Son Tutarlılık ve Tahkik Editörü Ajanı:**
+3. **Son Tutarlılık ve Tahkik Editörü Ajanı (Tahkikli + Varaksız Akıcı Saf Metin):**
    - Tüm sayfalar tamamlandığında `python scripts/birlestir_ve_denetle.py ./proje_ciktisi --title "{eser_adi or 'Yazma Eser Tahkikli Tercüme'}"` komutunu çalıştır.
-   - Ayrı bir **Tutarlılık Editörü Alt-Ajanı** görevlendirerek sayfa geçişlerindeki yarım cümleleri (`rekabe`) ve tüm sayfalardaki kavram birliğini denetletip nihai `tam_metin_tercume.md` ve `tercume_kitapcigi.html` çıktısını üret."""
+   - Ayrı bir **Tutarlılık Editörü Alt-Ajanı** görevlendirerek rekabe tekrarlarını temizletip sayfa geçişlerindeki bölünmüş cümleleri birleştir; hem `[vr. Xa]` atıflı `tam_metin_tercume.md` hem kesintisiz saf okuma metni `tam_metin_akici_okuma.md` hem de `tercume_kitapcigi.html` çıktısını üret."""
 
     return "\n".join(plan_md), prompt, first_page_img
 
@@ -164,11 +176,23 @@ def build_ui() -> gr.Blocks:
                 )
                 with gr.Row():
                     in_title = gr.Textbox(label="Eser Adı", value="Şerhu'l-Akâid Hâşiyesi")
-                    in_lang = gr.Dropdown(["Arapça", "Osmanlı Türkçesi", "Farsça", "Karma (Arapça-Osmanlıca)"], value="Arapça", label="Eser Dili")
+                    in_lang = gr.Dropdown(
+                        ["Arapça", "Osmanlı Türkçesi", "Farsça", "Karma / Mülemma (Arapça–Osmanlıca–Farsça)"],
+                        value="Arapça",
+                        label="Eser Dili",
+                    )
                     in_field = gr.Dropdown(
                         ["Kelâm / Akâid", "Fıkıh & Usûl", "Tasavvuf", "Felsefe / Mantık", "Tefsir / Hadis", "Tarih / Tabakât"],
                         value="Kelâm / Akâid",
                         label="İlim Dalı",
+                    )
+                    in_profile = gr.Dropdown(
+                        [
+                            "Genel Yazma Eser Tahkiki",
+                            "Kelâm, Şerh–Hâşiye & Tasavvuf (Nûniyye / Şerhu'l-Akâid / Karsî)",
+                        ],
+                        value="Kelâm, Şerh–Hâşiye & Tasavvuf (Nûniyye / Şerhu'l-Akâid / Karsî)",
+                        label="Uzmanlık Sözlük Profili",
                     )
                 with gr.Row():
                     in_pages = gr.Number(label="Toplam PDF Sayfa / Poz Sayısı", value=100, precision=0)
@@ -182,7 +206,7 @@ def build_ui() -> gr.Blocks:
                 out_orch_prompt = gr.Code(label="Antigravity / Claude Ana Oturumuna Yapıştıracağınız Orkestrasyon İstemi", language="markdown")
                 btn_plan.click(
                     plan_parallel_waves,
-                    inputs=[in_title, in_lang, in_field, in_pages, in_batch, in_split, in_pdf],
+                    inputs=[in_title, in_lang, in_field, in_profile, in_pages, in_batch, in_split, in_pdf],
                     outputs=[out_plan, out_orch_prompt, out_preview_img],
                 )
 

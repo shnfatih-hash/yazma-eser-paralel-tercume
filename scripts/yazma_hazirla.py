@@ -40,17 +40,24 @@ GLOSSARY_TEMPLATE = """# Ortak Terim Sözlüğü ve Tercüme İlkeleri (`glossar
 - **Eser Adı:** [Aşama 1'de doldurulacak]
 - **Müellif / Dönem:** [Aşama 1'de doldurulacak]
 - **İlim Dalı:** [Kelâm / Fıkıh / Tasavvuf / Felsefe / Tarih vb.]
-- **Hat Türü ve Nüsha Özellikleri:** [Nesih / Ta‘lîk / Rik‘a, satır sayısı, derkenar durumu]
-- **Tercüme Üslubu:** Akademik, akıcı günümüz Türkçesi; teknik ıstılahların ilk geçtiği yerde parantez içinde özgün kavram gösterilir; varak/sayfa geçişleri `[Sayfa X]` olarak korunur; okunamayan yerler asla tahmin edilmez (`[...]`, `[kelime?]`).
+- **Hat Türü ve Nüsha Özellikleri:** [Nesih / Ta‘lîk / Rik‘a, satır sayısı, derkenar durumu, istinsah kaydı]
+- **Tercüme ve Tahkik Üslubu (TDV İA Standardı):**
+  - **Sıfır Kayıp & Mülemma Kuralı:** Osmanlıca veya Arapça–Osmanlıca–Farsça karma (*mülemma*) metinlerde hiçbir cümle *"zaten Türkçe"* ya da *"klasik hamdele/dua"* diyerek atlanmaz; zahriye/vakıf/temellük kayıtlarından ketebeye kadar tamamı günümüz akademik Türkçesine aktarılır.
+  - **Katman Ayrımı:** Ana metin (`ḳavluhû`) çift tırnak (`" "`) içinde şerhten ayrılır; kenardaki `صح` (*sahh*) tashihleri doğrudan ait olduğu cümleye yerleştirilir; `منه` (*minhü*) ve derkenar notları sona yığılmadan ilgili paragrafın hemen altında sunulur; okunamayan yerler uydurulmaz (`[...]`, `[kelime?]`); zamir mercii veya doktriner çift anlamlılıklarda paragraf altına `Not:` düşülür.
 
 ## 2. Onaylı Istılahlar, Özel İsimler ve Kalıp İfadeler
 
 | Asıl İbare (Arapça/Osmanlıca) | Transkripsiyon | Onaylı Türkçe Karşılık | Açıklama / Bağlam Notu | İlk Sayfa |
 | :--- | :--- | :--- | :--- | :---: |
 | `المصنف رحمه الله` | el-muṣannif raḥimehullâh | Müellif (Allah ona rahmet etsin) | Şerhlerde ana metin yazarını işaret eder | 1 |
-| `قوله` | ḳavluhû | Müellifin "..." sözü | Şerh/hâşiye başlangıç ibaresi | 1 |
-| `صح` | ṣaḥḥ | [Kenar tashihi: sahh] | Müstensihin kenardan metne eklediği doğrulama kaydı | - |
+| `قوله` | ḳavluhû | Müellifin "..." sözü | Şerh/hâşiye başlangıç ibaresi (çift tırnakla ayrılır) | 1 |
+| `فإن قلتَ ... قلتُ` | fe-in ḳulte ... ḳultü | Eğer dersen ki... Ben de derim ki... | Klasik şerh diyalektiği itiraz–cevap kalıbı | - |
+| `صح` | ṣaḥḥ | [... (sahh)] | Müstensihin kenarda tamamladığı ana metin ibaresi (cümle içine yerleştirilir) | - |
+| `منه` | minhü | Minhü Notu: | Müellifin kendi kenar notu (ilgili paragrafın hemen altında verilir) | - |
 """
+
+SKILL_ROOT = Path(__file__).resolve().parent.parent
+KELAM_PRESET_PATH = SKILL_ROOT / "examples" / "kelam_nuniyye_karsi_glossary.md"
 
 
 def extract_pdf_to_images(pdf_path: Path, img_dir: Path, dpi: int) -> list[Path]:
@@ -165,6 +172,7 @@ def cmd_prepare(args: argparse.Namespace) -> None:
 
     manifest = {
         "kaynak_girdi": str(src),
+        "uzmanlik_profili": getattr(args, "profile", "genel"),
         "toplam_sayfa": len(pages),
         "paralel_grup_boyutu": batch_size,
         "toplam_dalga": len(batches),
@@ -176,9 +184,12 @@ def cmd_prepare(args: argparse.Namespace) -> None:
 
     glossary_path = out_dir / "glossary.md"
     if not glossary_path.exists():
-        glossary_path.write_text(GLOSSARY_TEMPLATE, encoding="utf-8")
+        if getattr(args, "profile", "genel") == "kelam-serh-tasavvuf" and KELAM_PRESET_PATH.exists():
+            glossary_path.write_text(KELAM_PRESET_PATH.read_text(encoding="utf-8"), encoding="utf-8")
+        else:
+            glossary_path.write_text(GLOSSARY_TEMPLATE, encoding="utf-8")
 
-    print(f"Hazırlık tamamlandı: {len(pages)} sayfa, {len(batches)} paralel dalga (grup boyutu={batch_size}).")
+    print(f"Hazırlık tamamlandı: {len(pages)} sayfa, {len(batches)} paralel dalga (grup boyutu={batch_size}, profil={getattr(args, 'profile', 'genel')}).")
     print(f"Manifest : {manifest_path}")
     print(f"Sözlük   : {glossary_path}")
 
@@ -218,6 +229,12 @@ def main() -> None:
     p_prep.add_argument("--batch-size", type=int, default=10, help="Paralel alt-ajan dalga boyutu (varsayılan: 10)")
     p_prep.add_argument("--dpi", type=int, default=220, help="PDF sayfa çözünürlüğü (varsayılan: 220 DPI)")
     p_prep.add_argument("--split-folios", action="store_true", help="Çift varaklı pozları Sağ -> Sol sırasıyla ikiye böl")
+    p_prep.add_argument(
+        "--profile",
+        choices=["genel", "kelam-serh-tasavvuf"],
+        default="genel",
+        help="Başlangıç glossary.md uzmanlık şablonu (varsayılan: genel)",
+    )
     p_prep.set_defaults(func=cmd_prepare)
 
     p_crop = sub.add_parser("crop", help="Şüpheli ibareden 1:1 piksel kesiti alır.")

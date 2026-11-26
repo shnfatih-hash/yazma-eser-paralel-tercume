@@ -50,13 +50,14 @@ short_description: 10 paralel alt-ajan ve ortak sözlükle yazma eser tercümesi
 
 1. **10'arlı Paralel Alt-Ajan Orkestrasyonu:** Ana sohbet oturumu koordinasyonu yürütür; arka planda çalışan 10 alt-ajan her sayfayı ayrı dosyaya (`ceviriler/sayfa_0001.md`) çevirip işi bitince kapanır.
 2. **Çakışma Korumalı Ortak Terim Sözlüğü (`glossary.md`):** Paralel ajanlar aynı anda sözlük dosyasını ezmez; `glossary.md` dosyasını salt-okunur okur, yeni terim adaylarını dalga sonunda koordinatöre teslim eder.
-3. **Yazma Eser Diplomatik ve Tahkik Disiplini:**
-   - **Rekabe (*müş‘ir kelime*)** takibiyle varak sonu–varak başı cümle bağlama,
-   - Kenar **tashih (`صح` / *sahh*)** kayıtları ile **derkenar hâşiye (`منه` / *minhu*)** notlarını ana metinden ayrı katmanda gösterme,
-   - Silik, rutubetli veya okunamayan yerleri asla uydurmadan `[...]`, `[kelime?]`, `(!)` ile şerh aparatına alma.
-4. **Yerleşik Python Araçları & İnteraktif HTML Kitapçığı:**
-   - `scripts/yazma_hazirla.py` — PDF/ZIP/klasörden yüksek çözünürlüklü sayfa çıkarma, çift varak (`a/b`) ayırma, `manifest.json` ve `glossary.md` üretimi.
-   - `scripts/birlestir_ve_denetle.py` — Eksik sayfa ve şerh denetimi (`denetim_raporu.md`), birleşik Markdown (`tam_metin_tercume.md`) ve aranabilir terim sözlüklü **İnteraktif HTML Tercüme Kitapçığı (`tercume_kitapcigi.html`)** üretimi.
+3. **Yazma Eser Diplomatik, Doktriner ve Tahkik Disiplini ("Sıfır Kayıp" & "Sıfır Uydurma"):**
+   - **Mülemma ve Tam Metin Sadakati:** Osmanlıca veya Arapça–Osmanlıca–Farsça karma metinlerde hiçbir cümleyi *"zaten Türkçe"* ya da *"klasik hamdele/dua"* diyerek atlamadan zahriye/vakıf/temellük kayıtlarından ketebeye kadar eksiksiz günümüz akademik Türkçesine aktarma,
+   - **Katman Hassasiyeti (`Sahh`, Satır Arası, `Minhü`):** Kenardaki `صح` (*sahh*) tashihlerini ait olduğu cümleye yerleştirme, `منه` (*minhü*) ve derkenar hâşiyelerini sona yığmadan ilgili paragrafın hemen altında gösterme, zamir mercii ve doktriner yorum ihtimallerine kısa `Not:` düşme,
+   - **Rekabe (*müş‘ir kelime*)** takibiyle varak sonu–varak başı bölünmüş cümleleri birleştirme ve silik yerleri asla uydurmadan `[...]`, `[kelime?]`, `(!)` ile şerh aparatına alma,
+   - **Hazır Kelâm / Şerh–Hâşiye / Tasavvuf Uzmanlık Sözlüğü:** TDV İslâm Ansiklopedisi standardında Mâtürîdî–Eş‘arî–Mu‘tezilî kelâmı, *Kasîde-i Nûniyye* / *Şerhu'l-Akâid* şerhleri, Dâvûd-i Karsî geleneği ve Ekberî tasavvuf ıstılahları şablonu (`examples/kelam_nuniyye_karsi_glossary.md`).
+4. **Yerleşik Python Araçları, Çift Çıktı Modu & İnteraktif HTML Kitapçığı:**
+   - `scripts/yazma_hazirla.py` — PDF/ZIP/klasörden yüksek çözünürlüklü sayfa çıkarma, çift varak (`a/b`) ayırma, alan profiline göre `manifest.json` ve `glossary.md` üretimi.
+   - `scripts/birlestir_ve_denetle.py` — Eksik sayfa ve şerh denetimi (`denetim_raporu.md`), **Atıflı Tahkik Nüshası (`tam_metin_tercume.md`)**, sayfa/varak işaretleri ve rekabe kesintilerinden arındırılmış **Kesintisiz Akıcı Okuma Metni (`tam_metin_akici_okuma.md`)** ve çok sekmeli **İnteraktif HTML Tercüme Kitapçığı (`tercume_kitapcigi.html`)** üretimi.
 
 ---
 
